@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Vanilla demo",
+            "type": "msedge",
+            "request": "launch",
+            "url": "http://localhost:8080/examples/vanilla/index.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "React demo",
+            "type": "msedge",
+            "request": "launch",
+            "url": "http://localhost:5173/",
+            "webRoot": "${workspaceFolder}/examples/react"
+        }
+    ]
+}

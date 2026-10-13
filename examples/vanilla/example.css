@@ -1,0 +1,249 @@
+@font-face {
+    font-family: 'Fira Code';
+    src: url('./assets/FiraCode-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+/* ── Theme ──────────────────────────────────────────────────────────────────
+   Set data-applied-mode="light" or "dark" on <html> from JavaScript.
+   The --seq-*, --quality-*, --crosshair and --trace-bg variables are the
+   trace colors; example.js reads them with colorsFromCss.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root[data-applied-mode="light"] {
+    color-scheme: light;
+    --text:           #1a1a1a;
+    --background:     #f4f6f5;
+    --trace-bg:       #ffffff;
+    --toolbar-bg:     #dde3e0;
+    --status-bg:      #e8edeb;
+    --left-bg:        #dde3e0;
+    --border:         #cacaca;
+    --scroll-back:    #e8e8e8;
+    --scroll-port:    #9a9a9a;
+    --left-resizer:        rgb(190, 190, 190);
+    --left-resizer-active: darkgray;
+
+    --seq-graph-a:    green;
+    --seq-graph-c:    blue;
+    --seq-graph-g:    black;
+    --seq-graph-t:    red;
+    --seq-mutation:   SaddleBrown;
+    --crosshair:      black;
+    --quality-low:    OrangeRed;
+    --quality-med:    Gold;
+    --quality-high:   CornflowerBlue;
+}
+
+:root[data-applied-mode="dark"] {
+    color-scheme: dark;
+    --text:           #d9d0d0;
+    --background:     #282828;
+    --trace-bg:       #121212;
+    --toolbar-bg:     #333b38;
+    --status-bg:      #2e3330;
+    --left-bg:        #333b38;
+    --border:         #444;
+    --scroll-back:    #2a2a2a;
+    --scroll-port:    #777;
+    --left-resizer:        rgb(80, 80, 80);
+    --left-resizer-active: rgb(110, 110, 110);
+
+    --seq-graph-a:    ForestGreen;
+    --seq-graph-c:    CornflowerBlue;
+    --seq-graph-g:    DarkGray;
+    --seq-graph-t:    red;
+    --seq-mutation:   Peru;
+    --crosshair:      lightgray;
+    --quality-low:    OrangeRed;
+    --quality-med:    Gold;
+    --quality-high:   CornflowerBlue;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────────
+   Adjust --left-width to change the width of the demo side panel and
+   --trace-height to change the height of each trace.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+    --left-width:         20%;
+    --left-resizer-width: 6px;
+    --toolbar-height:     38px;
+    --status-height:      24px;
+    --trace-height:       180px;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: 'Fira Code', monospace;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Resizable left panel — demonstrates the traces adapting to container resizes */
+.left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--left-width);
+    background: var(--left-bg);
+    overflow: hidden;
+}
+
+.left-resizer {
+    position: absolute;
+    left: calc(var(--left-width) - var(--left-resizer-width) / 2);
+    top: 0;
+    bottom: 0;
+    width: var(--left-resizer-width);
+    background-color: var(--left-resizer);
+    cursor: col-resize;
+    z-index: 10;
+    touch-action: none;
+}
+
+.left-resizer:hover,
+.left-resizer.active {
+    background-color: var(--left-resizer-active);
+}
+
+/* Color legend in the left panel */
+.legend-title {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 10px 4px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+.legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Main area — everything to the right of the left panel */
+.main {
+    position: absolute;
+    left: var(--left-width);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Toolbar */
+.toolbar {
+    height: var(--toolbar-height);
+    background: var(--toolbar-bg);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 10px;
+    flex-shrink: 0;
+    font-size: 12px;
+}
+
+.toolbar-title {
+    font-size: 14px;
+    font-weight: bold;
+    flex: 1;
+}
+
+.toolbar button,
+.trace-title button {
+    min-width: 28px;
+    height: 28px;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background: var(--trace-bg);
+    color: var(--text);
+}
+
+.toolbar button.wide {
+    font-size: 12px;
+}
+
+/* Overall scroll bar — seqscrollbar fills this div with its canvas */
+.overall-scroll {
+    height: 10px;
+    margin: 8px 10px 6px 40px;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.traces {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 10px 8px;
+}
+
+.trace-row {
+    border: 1px solid var(--border);
+    background: var(--trace-bg);
+    flex-shrink: 0;
+}
+
+.trace-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.trace-title span {
+    flex: 1;
+}
+
+.trace-title button {
+    min-width: 22px;
+    height: 22px;
+    font-size: 14px;
+}
+
+/* A trace — seqtrace fills this div with its canvases; it needs a height */
+.trace {
+    height: var(--trace-height);
+    contain: layout paint;
+}
+
+/* A trace's own scroll bar */
+.trace-scroll {
+    height: 8px;
+    margin: 2px 4px 4px 34px;
+    border: 1px solid var(--border);
+}
+
+/* Status bar */
+.status-bar {
+    height: var(--status-height);
+    line-height: var(--status-height);
+    padding: 0 10px;
+    font-size: 12px;
+    background: var(--status-bg);
+    color: var(--text);
+    flex-shrink: 0;
+}

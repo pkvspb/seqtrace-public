@@ -1,0 +1,24 @@
+Copyright (c) 2026 Kirill Petrov. All Rights Reserved.
+
+The files in this directory (seqtrace.js, seqscrollbar.js, seqlink.js) are
+compiled, obfuscated distributions of proprietary software and are licensed,
+not sold.
+
+Permission is granted to use these files, unmodified, as dependencies in
+applications and internal projects, including commercial applications.
+
+The following are NOT permitted without prior written permission from the
+copyright owner:
+
+  - Modifying, decompiling, reverse-engineering, or de-obfuscating these files;
+  - Redistributing these files as a standalone library, framework, SDK,
+    component package, developer tool, or competing product;
+  - Sublicensing, selling, or otherwise transferring rights to these files.
+
+These files are provided "as is", without warranty of any kind, express or
+implied, including but not limited to the warranties of merchantability,
+fitness for a particular purpose, or non-infringement.
+
+This license applies only to the files in this `lib/` directory. The rest of
+this repository (examples, mock data, documentation) is licensed under the
+Apache License, Version 2.0 — see the LICENSE file in the repository root.

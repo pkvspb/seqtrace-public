@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeqTrace — Linked DNA Trace Viewer</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="./example.css">
+</head>
+<body>
+    <!--
+        Each library takes an element, not an id: seqtrace and seqscrollbar
+        fill the element they are given. Size those elements with CSS.
+    -->
+
+    <!-- Resizable left panel — drag the splitter to show the traces adapting -->
+    <div class="left">
+        <div class="legend-title">Trace</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--seq-graph-a)"></span>A</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--seq-graph-c)"></span>C</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--seq-graph-g)"></span>G</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--seq-graph-t)"></span>T</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--seq-mutation)"></span>Mutation (ambiguity code)</div>
+        <div class="legend-title">Quality</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--quality-low)"></span>Low (Q &lt; 8)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--quality-med)"></span>Medium (8 ≤ Q &lt; 16)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background: var(--quality-high)"></span>High (Q ≥ 16)</div>
+    </div>
+    <div class="left-resizer" id="left-resizer-id"></div>
+
+    <div class="main">
+        <div class="toolbar">
+            <span class="toolbar-title">SeqTrace</span>
+            <button id="zoom-out-id" title="Zoom out all traces">-</button>
+            <button id="zoom-in-id" title="Zoom in all traces">+</button>
+            <button id="reset-id" class="wide" title="Back to the whole range, without per-trace shifts or zoom">Reset</button>
+            <label><input type="checkbox" id="same-scale-id"> Same scale</label>
+            <button id="theme-toggle-id" title="Toggle light/dark theme"></button>
+        </div>
+
+        <!-- Overall scroll bar: moves every trace together -->
+        <div class="overall-scroll" id="overall-scroll-id"></div>
+
+        <!-- One row per trace, created by example.js: caption with its own -, +, the trace, its own scroll bar -->
+        <div class="traces" id="traces-id"></div>
+
+        <div class="status-bar" id="status-id"></div>
+    </div>
+
+    <script type="module" src="./example.js"></script>
+</body>
+</html>
